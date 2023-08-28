@@ -6,13 +6,34 @@ import {SquarePlus} from '../Icons/SquarePlus'
 import {useStore} from '../store'
 import {State} from '../types'
 
+type FormValues = {
+  title?: string
+  description?: string
+}
+
 export const NewTask = () => {
   const {isOpen, state, onClose} = useNewTask()
+  const cards = useStore(store => store.cards)
+
   const addCard = useStore(store => store.addCard)
   const formik = useFormik({
     initialValues: {
       title: '',
       description: '',
+    },
+    validate: values => {
+      const errors: FormValues = {}
+      if (!values.title) {
+        errors.title = 'Required'
+      }
+      if (!values.description) {
+        errors.description = 'Required'
+      }
+      const cardTitles = cards.map(card => card.title)
+      if (cardTitles.includes(values.title)) {
+        errors.title = 'Title already exists'
+      }
+      return errors
     },
     onSubmit: ({title, description}, {resetForm}) => {
       addCard(title, description, state as State)
@@ -82,6 +103,9 @@ export const NewTask = () => {
                                   value={formik.values.title}
                                 />
                               </div>
+                              {formik.errors.title ? (
+                                <div>{formik.errors.title}</div>
+                              ) : null}
                             </div>
                           </div>
                           <div className="col-span-full">
@@ -101,6 +125,9 @@ export const NewTask = () => {
                                 onChange={formik.handleChange}
                                 value={formik.values.description}
                               />
+                              {formik.errors.description ? (
+                                <div>{formik.errors.description}</div>
+                              ) : null}
                             </div>
                           </div>
                         </div>
