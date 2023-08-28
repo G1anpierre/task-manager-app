@@ -31,4 +31,12 @@ export const useStore = create<Store>(set => ({
         },
       ],
     })),
+  draggedTask: null,
+  setDraggedTask: (title: string) => set({draggedTask: title}),
+  moveTask: (title: string, state: State) =>
+    set(store => ({
+      cards: store.cards.map(card =>
+        card.title === title ? {...card, title, state} : card,
+      ),
+    })),
 }))
