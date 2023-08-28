@@ -14,8 +14,10 @@ export const NewTask = () => {
       title: '',
       description: '',
     },
-    onSubmit: ({title, description}) => {
+    onSubmit: ({title, description}, {resetForm}) => {
       addCard(title, description, state as State)
+      onClose()
+      resetForm()
     },
   })
 
