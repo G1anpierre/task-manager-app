@@ -19,9 +19,9 @@ export const Section = ({state}: {state: State}) => {
   const sectionClass = classNames(
     'border-2 p-2 rounded-lg h-[800px] flex flex-col gap-2 overflow-y-scroll no-scrollbar',
     {
-      'border-mantis-500': state === 'PLANNED',
+      'border-mantis-500': state === 'COMPLETED',
       'border-warning': state === 'DOING',
-      'border-danger': state === 'COMPLETED',
+      'border-danger': state === 'PLANNED',
       'border-transparent outline-dashed': drop,
     },
   )
