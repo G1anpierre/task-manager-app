@@ -23,7 +23,7 @@ export const Section = ({state}: {state: State}) => {
       'border-mantis-500': state === 'PLANNED',
       'border-warning': state === 'DOING',
       'border-danger': state === 'COMPLETED',
-      'border-mantis-900': drop,
+      'border-transparent outline-dashed': drop,
     },
   )
 
