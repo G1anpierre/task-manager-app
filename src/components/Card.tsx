@@ -16,7 +16,7 @@ export const Card = ({card}: {card: CardType}) => {
 
   return (
     <div
-      onDragStart={() => setDraggedTask(card.title)}
+      onDragStart={() => setDraggedTask(card.id)}
       draggable
       className="cursor-pointer border-2 border-mantis-400 bg-mantis-200 text-currentColor  h-40 rounded-lg grid grid-rows-[auto_minmax(50px,_1fr)_auto] p-2 relative"
     >
