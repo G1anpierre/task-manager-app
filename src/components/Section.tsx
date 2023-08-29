@@ -18,7 +18,7 @@ export const Section = ({state}: {state: State}) => {
   )
 
   const sectionClass = classNames(
-    'border-2 p-2 rounded-lg h-full flex flex-col gap-2 overflow-y-scroll',
+    'border-2 p-2 rounded-lg h-[800px] flex flex-col gap-2 overflow-y-scroll no-scrollbar',
     {
       'border-mantis-500': state === 'PLANNED',
       'border-warning': state === 'DOING',
@@ -28,7 +28,7 @@ export const Section = ({state}: {state: State}) => {
   )
 
   return (
-    <div className="h-full">
+    <div className="">
       <AddButton onClick={() => onOpen(state)} state={state} />
       <div
         className={sectionClass}

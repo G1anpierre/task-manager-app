@@ -82,11 +82,11 @@ export const NewTask = () => {
                     </Dialog.Title>
                     <div className="mt-2">
                       <form onSubmit={formik.handleSubmit}>
-                        <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                        <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
                           <div className="sm:col-span-6">
                             <label
                               htmlFor="Title"
-                              className="block text-sm font-medium leading-6 text-gray-900"
+                              className="block text-sm font-medium leading-6 text-gray-900 text-left"
                             >
                               Title
                             </label>
@@ -104,14 +104,16 @@ export const NewTask = () => {
                                 />
                               </div>
                               {formik.errors.title ? (
-                                <div>{formik.errors.title}</div>
+                                <span className="text-danger text-xs">
+                                  {formik.errors.title}
+                                </span>
                               ) : null}
                             </div>
                           </div>
                           <div className="col-span-full">
                             <label
                               htmlFor="about"
-                              className="block text-sm font-medium leading-6 text-gray-900"
+                              className="block text-sm font-medium leading-6 text-gray-900 text-left"
                             >
                               Description
                             </label>
@@ -126,7 +128,9 @@ export const NewTask = () => {
                                 value={formik.values.description}
                               />
                               {formik.errors.description ? (
-                                <div>{formik.errors.description}</div>
+                                <span className="text-danger text-xs">
+                                  {formik.errors.description}
+                                </span>
                               ) : null}
                             </div>
                           </div>

@@ -3,15 +3,22 @@ import {State, Store} from './types'
 
 export const useStore = create<Store>(set => ({
   cards: [
-    {id: '1', title: 'Card 1', description: 'Description 1', state: 'PLANNED'},
-    {id: '2', title: 'Card 2', description: 'Description 2', state: 'DOING'},
-    {id: '4', title: 'Card 4', description: 'Description 4', state: 'DOING'},
-    {id: '5', title: 'Card 5', description: 'Description 5', state: 'DOING'},
-    {id: '6', title: 'Card 6', description: 'Description 6', state: 'DOING'},
+    {
+      id: '1',
+      title: 'Example Title 1',
+      description: 'Example Description 1',
+      state: 'PLANNED',
+    },
+    {
+      id: '2',
+      title: 'Example Title 2',
+      description: 'Example Description 2',
+      state: 'DOING',
+    },
     {
       id: '3',
-      title: 'Card 3',
-      description: 'Description 3',
+      title: 'Example Title 3',
+      description: 'Example Description 3',
       state: 'COMPLETED',
     },
   ],
