@@ -11,7 +11,7 @@ export const Section = ({state}: {state: State}) => {
   const cards = useStore(store => store.cards)
   const {moveTask, draggedTask} = useStore(store => store)
   const {onOpen} = useNewTask()
-
+  console.log('cards :', JSON.stringify(cards, null, 2))
   const filteredCards = useMemo(
     () => cards?.filter(card => card.state === state),
     [cards, state],

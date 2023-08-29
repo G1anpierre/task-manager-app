@@ -1,26 +1,27 @@
 import {create} from 'zustand'
 import {State, Store} from './types'
+import {v4 as uuid} from 'uuid'
 
 export const useStore = create<Store>(set => ({
   cards: [
-    {
-      id: '1',
-      title: 'Example Title 1',
-      description: 'Example Description 1',
-      state: 'PLANNED',
-    },
-    {
-      id: '2',
-      title: 'Example Title 2',
-      description: 'Example Description 2',
-      state: 'DOING',
-    },
-    {
-      id: '3',
-      title: 'Example Title 3',
-      description: 'Example Description 3',
-      state: 'COMPLETED',
-    },
+    // {
+    //   id: '1',
+    //   title: 'Example Title 1',
+    //   description: 'Example Description 1',
+    //   state: 'PLANNED',
+    // },
+    // {
+    //   id: '2',
+    //   title: 'Example Title 2',
+    //   description: 'Example Description 2',
+    //   state: 'DOING',
+    // },
+    // {
+    //   id: '3',
+    //   title: 'Example Title 3',
+    //   description: 'Example Description 3',
+    //   state: 'COMPLETED',
+    // },
   ],
   removeCard: (id: string) =>
     set(store => ({
@@ -31,7 +32,7 @@ export const useStore = create<Store>(set => ({
       cards: [
         ...store.cards,
         {
-          id: String(Math.floor(Math.random() * 100000)),
+          id: uuid(),
           title,
           description,
           state,
@@ -43,7 +44,7 @@ export const useStore = create<Store>(set => ({
   moveTask: (title: string, state: State) =>
     set(store => ({
       cards: store.cards.map(card =>
-        card.title === title ? {...card, title, state} : card,
+        card.title === title ? {...card, state} : card,
       ),
     })),
 }))

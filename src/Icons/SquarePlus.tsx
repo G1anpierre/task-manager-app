@@ -3,9 +3,9 @@ import classNames from 'classnames'
 
 export const SquarePlus = ({state}: {state?: State | null}) => {
   const squarePlusClass = classNames('w-6 h-6', {
-    'text-mantis-500': state === 'PLANNED',
+    'text-mantis-500': state === 'COMPLETED',
     'text-warning': state === 'DOING',
-    'text-danger': state === 'COMPLETED',
+    'text-danger': state === 'PLANNED',
   })
 
   return (

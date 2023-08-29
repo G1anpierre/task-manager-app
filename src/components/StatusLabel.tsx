@@ -3,11 +3,11 @@ import {State} from '../types'
 
 export const StatusLabel = ({state}: {state: State}) => {
   const statusLabel = classNames(
-    'text-white p-1 rounded-lg self-end justify-self-end bg-mantis-500',
+    'text-white p-1 rounded-lg self-end justify-self-end',
     {
-      'bg-mantis-500': state === 'PLANNED',
+      'bg-mantis-500': state === 'COMPLETED',
       'bg-warning': state === 'DOING',
-      'bg-danger': state === 'COMPLETED',
+      'bg-danger': state === 'PLANNED',
     },
   )
 
