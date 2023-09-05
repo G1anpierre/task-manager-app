@@ -23,6 +23,8 @@
     "react-router-dom": "^6.15.0",
     "sort-by": "^1.2.0",
     "uuidv4": "^6.2.13",
+    "zod": "^3.22.2",
+    "zod-formik-adapter": "^1.2.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {

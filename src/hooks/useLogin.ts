@@ -11,7 +11,13 @@ export const useAuthenticate = (type: 'login' | 'signup') => {
   const navigate = useNavigate()
   const mutate = useMutation<
     AxiosResponse<ResponseData>,
-    unknown,
+    {
+      response: {
+        data: {
+          message: string
+        }
+      }
+    },
     {
       name?: string
       email: string
