@@ -1,7 +1,16 @@
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {Logo} from './Logo'
+import {z} from 'zod'
 import {useAuthenticate} from '../hooks/useLogin'
+import {toFormikValidationSchema} from 'zod-formik-adapter'
+import {LoadingSpiner} from '../Icons/LoadingSpiner'
+
+const SignUpSchema = z.object({
+  name: z.string().min(3),
+  email: z.string().email('Please enter a valid email'),
+  password: z.string().min(6),
+})
 
 export const SignUpPage = () => {
   const registerMutation = useAuthenticate('signup')
@@ -11,9 +20,8 @@ export const SignUpPage = () => {
       email: '',
       password: '',
     },
-    //TODO validate,
+    validationSchema: toFormikValidationSchema(SignUpSchema),
     onSubmit: values => {
-      // console.log(JSON.stringify(values, null, 2))
       registerMutation.mutate(values)
     },
   })
@@ -34,9 +42,14 @@ export const SignUpPage = () => {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="flex justify-between text-sm font-medium leading-6 text-gray-900"
                 >
-                  Name
+                  <span>Name</span>
+                  {formik.touched.name && formik.errors.name ? (
+                    <span className="text-danger text-xs">
+                      *{formik.errors.name}
+                    </span>
+                  ) : null}
                 </label>
                 <div className="mt-2">
                   <input
@@ -47,6 +60,7 @@ export const SignUpPage = () => {
                     required
                     className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-mantis-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mantis-600 sm:text-sm sm:leading-6"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.name}
                   />
                 </div>
@@ -54,9 +68,14 @@ export const SignUpPage = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="flex justify-between text-sm font-medium leading-6 text-gray-900"
                 >
-                  Email address
+                  <span>Email address</span>
+                  {formik.touched.email && formik.errors.email ? (
+                    <span className="text-danger text-xs">
+                      *{formik.errors.email}
+                    </span>
+                  ) : null}
                 </label>
                 <div className="mt-2">
                   <input
@@ -67,6 +86,7 @@ export const SignUpPage = () => {
                     required
                     className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-mantis-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mantis-600 sm:text-sm sm:leading-6"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.email}
                   />
                 </div>
@@ -75,9 +95,14 @@ export const SignUpPage = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="flex justify-between text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  <span>Password</span>
+                  {formik.touched.password && formik.errors.password ? (
+                    <span className="text-danger text-xs">
+                      *{formik.errors.password}
+                    </span>
+                  ) : null}
                 </label>
                 <div className="mt-2">
                   <input
@@ -88,6 +113,7 @@ export const SignUpPage = () => {
                     required
                     className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-mantis-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-mantis-600 sm:text-sm sm:leading-6"
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.password}
                   />
                 </div>
@@ -124,8 +150,14 @@ export const SignUpPage = () => {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-mantis-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-mantis-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
+                  <div role="status">
+                    {registerMutation.isLoading ? <LoadingSpiner /> : null}
+                  </div>
+                  Sign Up
                 </button>
+                <span className="text-danger text-xs">
+                  {registerMutation.error?.response?.data?.message}
+                </span>
               </div>
             </form>
 
