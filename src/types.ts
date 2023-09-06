@@ -1,4 +1,5 @@
 export type State = 'PLANNED' | 'DOING' | 'COMPLETED'
+export const StateList = ['PLANNED', 'DOING', 'COMPLETED'] as const
 
 export type Card = {
   id: string

@@ -1,9 +1,9 @@
 import {useStore} from '../store'
 import {DeleteButton} from './DeleteButton'
-import {Card as CardType} from '../types'
 import {StatusLabel} from './StatusLabel'
+import {Task} from '../hooks/useGetTasks'
 
-export const Card = ({card}: {card: CardType}) => {
+export const Card = ({card}: {card: Task}) => {
   const {removeCard, setDraggedTask} = useStore(store => store)
   const handleDelete = (id: string) => {
     removeCard(id)
@@ -30,7 +30,7 @@ export const Card = ({card}: {card: CardType}) => {
       <p className="text-sm" onDoubleClick={() => handleEdit('description')}>
         {card.description}
       </p>
-      <StatusLabel state={card.state} />
+      <StatusLabel state={card.status} />
     </div>
   )
 }

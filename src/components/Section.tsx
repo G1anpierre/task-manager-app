@@ -1,20 +1,17 @@
-import {useMemo, useState} from 'react'
+import {useState} from 'react'
 import {useStore} from '../store'
 import {AddButton} from './AddButton'
 import {Card} from './Card'
 import {State} from '../types'
 import {useNewTask} from '../provider/NewTaskProvider'
 import classNames from 'classnames'
+import useTaskList from '../hooks/useGetTasks'
 
 export const Section = ({state}: {state: State}) => {
   const [drop, setDrop] = useState(false)
-  const cards = useStore(store => store.cards)
+  const {validatedTasks} = useTaskList(state)
   const {moveTask, draggedTask} = useStore(store => store)
   const {onOpen} = useNewTask()
-  const filteredCards = useMemo(
-    () => cards?.filter(card => card.state === state),
-    [cards, state],
-  )
 
   const sectionClass = classNames(
     'border-2 p-2 rounded-lg h-[800px] flex flex-col gap-2 overflow-y-scroll no-scrollbar',
@@ -45,7 +42,7 @@ export const Section = ({state}: {state: State}) => {
           e.preventDefault()
         }}
       >
-        {filteredCards.map(card => (
+        {validatedTasks.map(card => (
           <Card key={card.id} card={card} />
         ))}
       </div>
