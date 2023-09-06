@@ -16,10 +16,15 @@ export default function useTaskList(state: State) {
     return response
   }
 
-  const {data, isLoading, isError} = useQuery(['tasks', {state}], getTasks)
+  const {data, isLoading, isError, isSuccess} = useQuery(
+    ['tasks', {state}],
+    getTasks,
+  )
   let validatedTasks: Task[] = []
   try {
-    validatedTasks = tasksSchema.parse(data?.data.data)
+    if (isSuccess) {
+      validatedTasks = tasksSchema.parse(data?.data.data)
+    }
   } catch (e) {
     console.error(e)
   }

@@ -1,12 +1,14 @@
+import {useDeleteTask} from '../hooks/useDeleteTask'
 import {useStore} from '../store'
 import {Task} from '../types'
 import {DeleteButton} from './DeleteButton'
 import {StatusLabel} from './StatusLabel'
 
 export const Card = ({card}: {card: Task}) => {
-  const {removeCard, setDraggedTask} = useStore(store => store)
+  const deleteMutate = useDeleteTask()
+  const {setDraggedTask} = useStore(store => store)
   const handleDelete = (id: string) => {
-    removeCard(id)
+    deleteMutate.mutate(id)
   }
 
   const handleEdit = (type: string) => {
