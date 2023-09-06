@@ -1,7 +1,7 @@
 import {useStore} from '../store'
+import {Task} from '../types'
 import {DeleteButton} from './DeleteButton'
 import {StatusLabel} from './StatusLabel'
-import {Task} from '../hooks/useGetTasks'
 
 export const Card = ({card}: {card: Task}) => {
   const {removeCard, setDraggedTask} = useStore(store => store)

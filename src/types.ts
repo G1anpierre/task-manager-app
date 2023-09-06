@@ -1,5 +1,29 @@
-export type State = 'PLANNED' | 'DOING' | 'COMPLETED'
-export const StateList = ['PLANNED', 'DOING', 'COMPLETED'] as const
+import {z} from 'zod'
+
+export type Task = z.infer<typeof taskSchema>
+
+export const StateList = z.enum(['PLANNED', 'DOING', 'COMPLETED'])
+export type State = z.infer<typeof StateList>
+
+export const taskSchema = z.object({
+  id: z.string(),
+  createdAt: z.string(),
+  title: z.string(),
+  description: z.string(),
+  status: StateList,
+  userId: z.string(),
+})
+
+export const tasksSchema = z.array(taskSchema)
+
+const createTask = taskSchema.pick({
+  title: true,
+  description: true,
+  status: true,
+})
+export type CreateTaskRequestType = z.infer<typeof createTask>
+
+// * To be Removed
 
 export type Card = {
   id: string

@@ -1,21 +1,7 @@
 import {useQuery} from '@tanstack/react-query'
 import axios, {AxiosResponse} from 'axios'
 import {getUser} from '../helper/localStorage'
-import {z} from 'zod'
-import {State, StateList} from '../types'
-
-const taskSchema = z.object({
-  id: z.string(),
-  createdAt: z.string(),
-  title: z.string(),
-  description: z.string(),
-  status: z.enum(StateList),
-  userId: z.string(),
-})
-
-export const tasksSchema = z.array(taskSchema)
-
-export type Task = z.infer<typeof taskSchema>
+import {State, Task, tasksSchema} from '../types'
 
 export default function useTaskList(state: State) {
   const getTasks = async (): Promise<AxiosResponse<{data: {data: Task[]}}>> => {

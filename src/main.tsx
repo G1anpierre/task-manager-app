@@ -9,6 +9,7 @@ import {LogInPage} from './components/LogInPage.tsx'
 import {ProtectedRoute} from './components/ProtectedRoute.tsx'
 import {SignUpPage} from './components/SignUpPage.tsx'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 
 const user = true
 
@@ -40,6 +41,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <RouterProvider router={router} />
         <NewTask />
       </NewtaskProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>,
 )
