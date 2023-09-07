@@ -21,7 +21,13 @@ const createTask = taskSchema.pick({
   description: true,
   status: true,
 })
+
+const deleteTask = taskSchema.pick({
+  id: true,
+  status: true,
+})
 export type CreateTaskRequestType = z.infer<typeof createTask>
+export type DeleteTaskRequestType = z.infer<typeof deleteTask>
 
 // * To be Removed
 

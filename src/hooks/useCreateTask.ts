@@ -19,7 +19,14 @@ export const useCreateTask = () => {
   const mutate = useMutation({
     mutationFn: createTask,
     onSuccess: ({data}) => {
-      queryClient.invalidateQueries(['tasks', {state: data.data.status}])
+      // queryClient.invalidateQueries(['tasks', {state: data.data.status}])
+      console.log('data :', data)
+    },
+    onSettled: (data, error, variables) => {
+      if (error) {
+        console.error(error)
+      }
+      queryClient.invalidateQueries(['tasks', {state: variables.status}])
     },
   })
 

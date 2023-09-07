@@ -4,7 +4,7 @@ import {useMutation, useQueryClient} from '@tanstack/react-query'
 
 export const useDeleteTask = () => {
   const queryClient = useQueryClient()
-  const deleteTask = (id: string) => {
+  const deleteTask = ({id}: {id: string; status?: string}) => {
     const url = `${import.meta.env.VITE_API_URL}/api/tasks/${id}`
 
     const headers = {
@@ -18,7 +18,14 @@ export const useDeleteTask = () => {
   const mutate = useMutation({
     mutationFn: deleteTask,
     onSuccess: ({data}) => {
-      queryClient.invalidateQueries(['tasks', {state: data.data.status}])
+      // queryClient.invalidateQueries(['tasks', {state: data.data.status}])
+      console.log('data :', data)
+    },
+    onSettled: (data, error, variables) => {
+      if (error) {
+        console.error(error)
+      }
+      queryClient.invalidateQueries(['tasks', {state: variables.status}])
     },
   })
 
