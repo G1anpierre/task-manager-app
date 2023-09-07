@@ -39,8 +39,8 @@ export const useStore = create<Store>(set => ({
         },
       ],
     })),
-  draggedTask: null,
-  setDraggedTask: (id: string) => set({draggedTask: id}),
+  draggedTaskId: null,
+  setDraggedTaskId: (id: string) => set({draggedTaskId: id}),
   moveTask: (id: string, state: State) =>
     set(store => {
       const card = store.cards.find(card => card.id === id) ?? store.cards[0]

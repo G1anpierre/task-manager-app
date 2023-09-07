@@ -6,11 +6,13 @@ import {State} from '../types'
 import {useNewTask} from '../provider/NewTaskProvider'
 import classNames from 'classnames'
 import useTaskList from '../hooks/useGetTasks'
+import {useMoveTask} from '../hooks/useMoveTask'
 
 export const Section = ({state}: {state: State}) => {
   const [drop, setDrop] = useState(false)
   const {validatedTasks} = useTaskList(state)
-  const {moveTask, draggedTask} = useStore(store => store)
+  const {draggedTaskId} = useStore(store => store)
+  const moveTask = useMoveTask()
   const {onOpen} = useNewTask()
 
   const sectionClass = classNames(
@@ -31,7 +33,7 @@ export const Section = ({state}: {state: State}) => {
         onDrop={e => {
           setDrop(false)
           e.preventDefault()
-          moveTask(draggedTask as string, state)
+          moveTask.mutate({id: draggedTaskId, status: state})
         }}
         onDragOver={e => {
           setDrop(true)
