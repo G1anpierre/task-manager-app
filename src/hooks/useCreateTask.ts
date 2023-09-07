@@ -49,7 +49,7 @@ export const useCreateTask = () => {
       // Return a context object with the snapshotted value
       return {previousTasksSnapShot}
     },
-    onSettled: (data, error, variables) => {
+    onSettled: (_, error, variables) => {
       if (error) {
         console.error(error)
       }

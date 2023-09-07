@@ -52,13 +52,13 @@ export const useMoveTask = () => {
       )
       return {previousTasksSnapShot}
     },
-    onSettled: (data, error) => {
+    onSettled: (_, error) => {
       if (error) {
         console.error(error)
       }
       queryClient.invalidateQueries(['tasks'])
     },
-    onError: (error, variables, context) => {
+    onError: (error, _, context) => {
       console.error('onError :', error)
       queryClient.setQueryData(['tasks'], context?.previousTasksSnapShot)
     },
