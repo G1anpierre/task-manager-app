@@ -1,11 +1,11 @@
 import {useQuery} from '@tanstack/react-query'
-import axios, {AxiosResponse} from 'axios'
+import axios from 'axios'
 import {getUser} from '../helper/localStorage'
-import {State, Task, tasksSchema} from '../types'
+import {State, Tasks, tasksSchema} from '../types'
 
 export default function useTaskList(state: State) {
-  const getTasks = async (): Promise<AxiosResponse<{data: {data: Task[]}}>> => {
-    const response = axios.get(
+  const getTasks = async (): Promise<Tasks> => {
+    const {data} = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/tasks/${state}`,
       {
         headers: {
@@ -13,20 +13,11 @@ export default function useTaskList(state: State) {
         },
       },
     )
-    return response
+    const validatedTasks = await tasksSchema.parse(data.data)
+    return validatedTasks
   }
 
-  const {data, isLoading, isError, isSuccess} = useQuery(
-    ['tasks', {state}],
-    getTasks,
-  )
-  let validatedTasks: Task[] = []
-  try {
-    if (isSuccess) {
-      validatedTasks = tasksSchema.parse(data?.data.data)
-    }
-  } catch (e) {
-    console.error(e)
-  }
-  return {validatedTasks, isLoading, isError}
+  const queryTasks = useQuery(['tasks', {state}], getTasks)
+
+  return queryTasks
 }

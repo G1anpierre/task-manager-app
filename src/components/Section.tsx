@@ -10,7 +10,7 @@ import {useMoveTask} from '../hooks/useMoveTask'
 
 export const Section = ({state}: {state: State}) => {
   const [drop, setDrop] = useState(false)
-  const {validatedTasks} = useTaskList(state)
+  const {data, isLoading} = useTaskList(state)
   const {draggedTaskId} = useStore(store => store)
   const moveTask = useMoveTask()
   const {onOpen} = useNewTask()
@@ -26,7 +26,7 @@ export const Section = ({state}: {state: State}) => {
   )
 
   return (
-    <div className="">
+    <div>
       <AddButton onClick={() => onOpen(state)} state={state} />
       <div
         className={sectionClass}
@@ -44,9 +44,11 @@ export const Section = ({state}: {state: State}) => {
           e.preventDefault()
         }}
       >
-        {validatedTasks.map(card => (
-          <Card key={card.id} card={card} />
-        ))}
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          data?.map(card => <Card key={card.id} card={card} />)
+        )}
       </div>
     </div>
   )

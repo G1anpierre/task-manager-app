@@ -16,6 +16,8 @@ export const taskSchema = z.object({
 
 export const tasksSchema = z.array(taskSchema)
 
+export type Tasks = z.infer<typeof tasksSchema>
+
 const createTask = taskSchema.pick({
   title: true,
   description: true,
