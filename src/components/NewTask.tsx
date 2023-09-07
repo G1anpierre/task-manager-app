@@ -4,7 +4,7 @@ import {Dialog, Transition} from '@headlessui/react'
 import {useFormik} from 'formik'
 import {SquarePlus} from '../Icons/SquarePlus'
 import {useStore} from '../store'
-import {State} from '../types'
+import {useCreateTask} from '../hooks/useCreateTask'
 
 type FormValues = {
   title?: string
@@ -14,8 +14,8 @@ type FormValues = {
 export const NewTask = () => {
   const {isOpen, state, onClose} = useNewTask()
   const cards = useStore(store => store.cards)
+  const mutate = useCreateTask()
 
-  const addCard = useStore(store => store.addCard)
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -36,7 +36,8 @@ export const NewTask = () => {
       return errors
     },
     onSubmit: ({title, description}, {resetForm}) => {
-      addCard(title, description, state as State)
+      if (!state) return
+      mutate.mutate({title, description, status: state})
       onClose()
       resetForm()
     },
