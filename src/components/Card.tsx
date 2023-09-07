@@ -6,7 +6,7 @@ import {StatusLabel} from './StatusLabel'
 
 export const Card = ({card}: {card: Task}) => {
   const deleteMutate = useDeleteTask()
-  const {setDraggedTaskId} = useStore(store => store)
+  const {setDraggedTask} = useStore(store => store)
   const handleDelete = ({id, status}: DeleteTaskRequestType) => {
     deleteMutate.mutate({id, status})
   }
@@ -18,7 +18,7 @@ export const Card = ({card}: {card: Task}) => {
 
   return (
     <div
-      onDragStart={() => setDraggedTaskId(card.id)}
+      onDragStart={() => setDraggedTask(card)}
       draggable
       className="cursor-pointer border-2 border-mantis-400 bg-mantis-200 text-currentColor  h-40 rounded-lg grid grid-rows-[auto_minmax(50px,_1fr)_auto] p-2 relative"
     >

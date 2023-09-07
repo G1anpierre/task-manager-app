@@ -11,7 +11,7 @@ import {useMoveTask} from '../hooks/useMoveTask'
 export const Section = ({state}: {state: State}) => {
   const [drop, setDrop] = useState(false)
   const {data, isLoading} = useTaskList(state)
-  const {draggedTaskId} = useStore(store => store)
+  const {draggedTask} = useStore(store => store)
   const moveTask = useMoveTask()
   const {onOpen} = useNewTask()
 
@@ -33,7 +33,7 @@ export const Section = ({state}: {state: State}) => {
         onDrop={e => {
           setDrop(false)
           e.preventDefault()
-          moveTask.mutate({id: draggedTaskId, status: state})
+          moveTask.mutate({card: draggedTask, moveToStatus: state})
         }}
         onDragOver={e => {
           setDrop(true)

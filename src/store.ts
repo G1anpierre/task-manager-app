@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import {State, Store} from './types'
+import {State, Store, Task, taskSchema} from './types'
 import {v4 as uuid} from 'uuid'
 
 export const useStore = create<Store>(set => ({
@@ -39,8 +39,15 @@ export const useStore = create<Store>(set => ({
         },
       ],
     })),
-  draggedTaskId: null,
-  setDraggedTaskId: (id: string) => set({draggedTaskId: id}),
+  draggedTask: taskSchema.parse({
+    id: '',
+    createdAt: '',
+    title: '',
+    description: '',
+    status: 'PLANNED',
+    userId: '',
+  }),
+  setDraggedTask: (card: Task) => set({draggedTask: card}),
   moveTask: (id: string, state: State) =>
     set(store => {
       const card = store.cards.find(card => card.id === id) ?? store.cards[0]
