@@ -16,7 +16,6 @@ export const NewTask = () => {
   const cards = useStore(store => store.cards)
   const mutate = useCreateTask()
 
-  // const addCard = useStore(store => store.addCard)
   const formik = useFormik({
     initialValues: {
       title: '',
