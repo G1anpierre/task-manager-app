@@ -38,6 +38,7 @@ export const useCreateTask = () => {
         id: Math.random().toString(),
         status: variables.status,
         title: variables.title,
+        // TODO Update with the right userId
         userId: Math.random().toString(),
       }
       queryClient.setQueryData(
