@@ -8,6 +8,7 @@ export default {
       white: '#ffffff',
       danger: '#dc2626',
       warning: '#d97706',
+      black: '#000000',
       mantis: {
         50: '#f6faf3',
         100: '#e9f5e3',
