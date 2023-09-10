@@ -6,8 +6,10 @@ import {DeleteButton} from './DeleteButton'
 import {StatusLabel} from './StatusLabel'
 import {useClickOutside} from '../hooks/useClickOutside'
 import classNames from 'classnames'
+import {useUpdateSaveTask} from '../hooks/useUpdateSaveEdit'
 
 export const Card = ({card}: {card: Task}) => {
+  const updateSaveMutate = useUpdateSaveTask()
   const deleteMutate = useDeleteTask()
   const {setDraggedTask} = useStore(store => store)
   const handleDelete = ({id, status}: DeleteTaskRequestType) => {
@@ -29,12 +31,18 @@ export const Card = ({card}: {card: Task}) => {
   }
   const ref = useClickOutside(doThisOnClickOutside)
 
-  const handleSave = () => {
-    console.log('handle save', {
+  const handleSave = async () => {
+    await updateSaveMutate.mutate({
+      id: card.id,
       title: editTask.title,
       description: editTask.description,
+      status: card.status,
     })
+    setEdit(false)
   }
+
+  const areFieldsModified =
+    card.title !== editTask.title || card.description !== editTask.description
 
   const handleEditTask = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -75,6 +83,7 @@ export const Card = ({card}: {card: Task}) => {
           className="font-black block w-3/4 rounded-md border-0 p-1.5 text-mantis-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           value={editTask.title}
           onChange={handleEditTask}
+          onKeyDown={e => e.key === 'Enter' && handleSave()}
         />
       ) : (
         <h2 className={titleClass} onDoubleClick={() => setEdit(true)}>
@@ -88,6 +97,7 @@ export const Card = ({card}: {card: Task}) => {
           value={editTask.description}
           onChange={handleEditTask}
           className="block w-full rounded-md border-0 p-1.5 text-mantis-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          onKeyDown={e => e.key === 'Enter' && handleSave()}
         />
       ) : (
         <p className={descriptionClass} onDoubleClick={() => setEdit(true)}>
@@ -96,10 +106,10 @@ export const Card = ({card}: {card: Task}) => {
       )}
       <div className="flex justify-between items-center">
         <StatusLabel state={card.status} />
-        <div className="flex gap-1">
-          {edit && (
+        <div className="grid grid-cols-[50px_50px] gap-1">
+          {edit && areFieldsModified && (
             <button
-              className="text-white py-0.5 px-1.5 rounded-lg bg-black hover:bg-danger"
+              className="text-white py-0.5 px-1.5 rounded-lg bg-black hover:bg-danger col-start-1"
               onClick={handleSave}
             >
               Save
@@ -107,7 +117,7 @@ export const Card = ({card}: {card: Task}) => {
           )}
           {hover ? (
             <button
-              className="text-white py-0.5 px-1.5 rounded-lg bg-mantis-600 hover:bg-mantis-800"
+              className="text-white py-0.5 px-1.5 rounded-lg bg-mantis-600 hover:bg-mantis-800 col-start-2"
               onClick={() => {
                 setEditTask({
                   title: card.title,
