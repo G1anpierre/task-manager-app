@@ -42,7 +42,8 @@ export const Card = ({card}: {card: Task}) => {
   }
 
   const areFieldsModified =
-    card.title !== editTask.title || card.description !== editTask.description
+    card.title.trim() !== editTask.title.trim() ||
+    card.description.trim() !== editTask.description.trim()
 
   const handleEditTask = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -73,9 +74,11 @@ export const Card = ({card}: {card: Task}) => {
       onMouseLeave={() => setHover(false)}
       ref={ref}
     >
-      <DeleteButton
-        onClick={() => handleDelete({id: card.id, status: card.status})}
-      />
+      {hover && (
+        <DeleteButton
+          onClick={() => handleDelete({id: card.id, status: card.status})}
+        />
+      )}
       {edit ? (
         <input
           type="text"
