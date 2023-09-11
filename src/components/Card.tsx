@@ -91,7 +91,10 @@ export const Card = ({card}: {card: Task}) => {
     >
       {hover && (
         <DeleteButton
-          onClick={() => handleDelete({id: card.id, status: card.status})}
+          onClick={() =>
+            !deleteMutate.isLoading &&
+            handleDelete({id: card.id, status: card.status})
+          }
         />
       )}
       {edit ? (
