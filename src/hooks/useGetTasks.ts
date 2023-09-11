@@ -14,6 +14,7 @@ export default function useTaskList(state: State) {
           },
         },
       )
+
       const validatedTasks = await tasksSchema.parse(data.data)
       return validatedTasks
     } catch (e) {

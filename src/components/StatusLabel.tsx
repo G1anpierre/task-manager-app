@@ -1,9 +1,15 @@
 import classNames from 'classnames'
 import {State} from '../types'
+import {CreatorUserType} from '../hooks/useGetCreatorTask'
 
-export const StatusLabel = ({state}: {state: State}) => {
+type StatusLabelType = {
+  state: State
+  userData?: CreatorUserType
+}
+
+export const StatusLabel = ({state, userData}: StatusLabelType) => {
   const statusLabel = classNames(
-    'text-white p-1 rounded-lg self-end justify-self-end',
+    'text-white py-0.5 px-1.5 rounded-lg self-end justify-self-end flex gap-1',
     {
       'bg-mantis-500': state === 'COMPLETED',
       'bg-warning': state === 'DOING',
@@ -11,5 +17,16 @@ export const StatusLabel = ({state}: {state: State}) => {
     },
   )
 
-  return <span className={statusLabel}>{state}</span>
+  return (
+    <div className={statusLabel}>
+      {userData ? (
+        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray">
+          <span className="text-xs font-medium leading-none text-white">
+            {userData?.name.substring(0, 1).toUpperCase()}
+          </span>
+        </span>
+      ) : null}
+      <span>{state}</span>
+    </div>
+  )
 }

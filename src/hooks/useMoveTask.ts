@@ -3,15 +3,14 @@ import {getUser} from '../helper/localStorage'
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 import {State, Task} from '../types'
 
+type MoveTaskProps = {
+  card: Task
+  moveToStatus: State
+}
+
 export const useMoveTask = () => {
   const queryClient = useQueryClient()
-  const moveTask = ({
-    card,
-    moveToStatus,
-  }: {
-    card: Task
-    moveToStatus: State
-  }) => {
+  const moveTask = ({card, moveToStatus}: MoveTaskProps) => {
     const url = `${import.meta.env.VITE_API_URL}/api/task/${card?.id}`
     const data = {status: moveToStatus}
     const headers = {
