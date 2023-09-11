@@ -1,14 +1,10 @@
 import {Link, useNavigate} from 'react-router-dom'
-import {getUser, removeUser} from '../helper/localStorage'
+import {getUserInfoFromToken, removeUser} from '../helper/localStorage'
 import {Logo} from './Logo'
 
 export const Navbar = () => {
   const navigate = useNavigate()
-  const token = getUser()
-  let user
-  if (token) {
-    user = JSON.parse(atob(token.split('.')[1]))
-  }
+  const user = getUserInfoFromToken()
 
   return (
     <nav className="mb-10">

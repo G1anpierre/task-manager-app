@@ -7,10 +7,15 @@ import {StatusLabel} from './StatusLabel'
 import {useClickOutside} from '../hooks/useClickOutside'
 import classNames from 'classnames'
 import {useUpdateSaveTask} from '../hooks/useUpdateSaveEdit'
+import {getUserInfoFromToken} from '../helper/localStorage'
+import {useGetCreatorTask} from '../hooks/useGetCreatorTask'
 
 export const Card = ({card}: {card: Task}) => {
+  const user = getUserInfoFromToken()
+
   const updateSaveMutate = useUpdateSaveTask()
   const deleteMutate = useDeleteTask()
+  const {data} = useGetCreatorTask(card.userId)
   const {setDraggedTask} = useStore(store => store)
   const handleDelete = ({id, status}: DeleteTaskRequestType) => {
     deleteMutate.mutate({id, status})
@@ -45,6 +50,8 @@ export const Card = ({card}: {card: Task}) => {
     card.title.trim() !== editTask.title.trim() ||
     card.description.trim() !== editTask.description.trim()
 
+  const isCreatorOfTask = user.id === card.userId
+
   const handleEditTask = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -54,23 +61,31 @@ export const Card = ({card}: {card: Task}) => {
     })
   }
 
-  const titleClass = classNames(
-    'text-xl font-bold text-left hover:cursor-pointer',
+  const titleClass = classNames('text-xl font-bold text-left', {
+    'text-mantis-600': hover,
+    'hover:cursor-pointer': isCreatorOfTask,
+  })
+
+  const descriptionClass = classNames('text-sm', {
+    'text-mantis-600': hover,
+    'hover:cursor-pointer': isCreatorOfTask,
+  })
+
+  const cardClass = classNames(
+    'border-2 border-mantis-400 bg-mantis-200 text-currentColor  h-40 rounded-lg grid gap-1 grid-rows-[auto_minmax(50px,_1fr)_auto] p-2 relative',
     {
-      'text-mantis-600': hover,
+      'opacity-25': !isCreatorOfTask,
+      'bg-slate-200': !isCreatorOfTask,
+      'cursor-move': isCreatorOfTask,
     },
   )
 
-  const descriptionClass = classNames('text-sm hover:cursor-pointer', {
-    'text-mantis-600': hover,
-  })
-
   return (
     <div
-      onDragStart={() => setDraggedTask(card)}
-      draggable
-      className="cursor-move border-2 border-mantis-400 bg-mantis-200 text-currentColor  h-40 rounded-lg grid gap-1 grid-rows-[auto_minmax(50px,_1fr)_auto] p-2 relative"
-      onMouseEnter={() => setHover(true)}
+      onDragStart={() => isCreatorOfTask && setDraggedTask(card)}
+      draggable={isCreatorOfTask}
+      className={cardClass}
+      onMouseEnter={() => isCreatorOfTask && setHover(true)}
       onMouseLeave={() => setHover(false)}
       ref={ref}
     >
@@ -89,7 +104,10 @@ export const Card = ({card}: {card: Task}) => {
           onKeyDown={e => e.key === 'Enter' && handleSave()}
         />
       ) : (
-        <h2 className={titleClass} onDoubleClick={() => setEdit(true)}>
+        <h2
+          className={titleClass}
+          onDoubleClick={() => isCreatorOfTask && setEdit(true)}
+        >
           {card.title}
         </h2>
       )}
@@ -108,7 +126,7 @@ export const Card = ({card}: {card: Task}) => {
         </p>
       )}
       <div className="flex justify-between items-center">
-        <StatusLabel state={card.status} />
+        <StatusLabel state={card.status} userData={data} />
         <div className="grid grid-cols-[50px_50px] gap-1">
           {edit && areFieldsModified && (
             <button
