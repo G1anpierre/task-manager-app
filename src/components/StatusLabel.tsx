@@ -20,7 +20,7 @@ export const StatusLabel = ({state, userData}: StatusLabelType) => {
   return (
     <div className={statusLabel}>
       {userData ? (
-        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray">
+        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-400">
           <span className="text-xs font-medium leading-none text-white">
             {userData?.name.substring(0, 1).toUpperCase()}
           </span>

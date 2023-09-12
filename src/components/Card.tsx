@@ -63,18 +63,19 @@ export const Card = ({card}: {card: Task}) => {
   const titleClass = classNames('text-xl font-bold text-left', {
     'text-mantis-600': hover,
     'hover:cursor-pointer': isCreatorOfTask,
+    'opacity-25': !isCreatorOfTask,
   })
 
   const descriptionClass = classNames('text-sm', {
     'text-mantis-600': hover,
     'hover:cursor-pointer': isCreatorOfTask,
+    'opacity-25': !isCreatorOfTask,
   })
 
   const cardClass = classNames(
     'border-2 border-mantis-400 bg-mantis-200 text-currentColor  h-40 rounded-lg grid gap-1 grid-rows-[auto_minmax(50px,_1fr)_auto] p-2 relative',
     {
-      'opacity-25': !isCreatorOfTask,
-      'bg-slate-200': !isCreatorOfTask,
+      'bg-gray-100': !isCreatorOfTask,
       'cursor-move': isCreatorOfTask,
     },
   )
@@ -123,7 +124,10 @@ export const Card = ({card}: {card: Task}) => {
           onKeyDown={e => e.key === 'Enter' && handleSave()}
         />
       ) : (
-        <p className={descriptionClass} onDoubleClick={() => setEdit(true)}>
+        <p
+          className={descriptionClass}
+          onDoubleClick={() => isCreatorOfTask && setEdit(true)}
+        >
           {card.description}
         </p>
       )}

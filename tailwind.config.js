@@ -9,7 +9,13 @@ export default {
       danger: '#dc2626',
       warning: '#d97706',
       black: '#000000',
-      gray: '#808080',
+      gray: {
+        50: '#f9fafb',
+        100: '#f3f4f6',
+        200: '#e5e7eb',
+        300: '#d1d5db',
+        400: '#9ca3af',
+      },
       mantis: {
         50: '#f6faf3',
         100: '#e9f5e3',
