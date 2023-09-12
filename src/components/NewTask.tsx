@@ -14,6 +14,7 @@ type FormValues = {
 export const NewTask = () => {
   const {isOpen, state, onClose} = useNewTask()
   const cards = useStore(store => store.cards)
+  const user = useStore(store => store.user)
   const mutate = useCreateTask()
 
   const formik = useFormik({
@@ -37,7 +38,7 @@ export const NewTask = () => {
     },
     onSubmit: ({title, description}, {resetForm}) => {
       if (!state) return
-      mutate.mutate({title, description, status: state})
+      mutate.mutate({title, description, status: state, userId: user.id})
       onClose()
       resetForm()
     },

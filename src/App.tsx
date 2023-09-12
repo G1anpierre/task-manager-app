@@ -1,8 +1,20 @@
+import {useEffect} from 'react'
 import './App.css'
 import {Navbar} from './components/Navbar'
 import {Section} from './components/Section'
+import {useStore} from './store'
+import {getUserInfoFromToken} from './helper/localStorage'
 
 function App() {
+  const {setUser} = useStore(store => store)
+
+  useEffect(() => {
+    const user = getUserInfoFromToken()
+    if (user) {
+      setUser(user)
+    }
+  }, [setUser])
+
   return (
     <>
       <Navbar />

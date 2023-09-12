@@ -7,11 +7,10 @@ import {StatusLabel} from './StatusLabel'
 import {useClickOutside} from '../hooks/useClickOutside'
 import classNames from 'classnames'
 import {useUpdateSaveTask} from '../hooks/useUpdateSaveEdit'
-import {getUserInfoFromToken} from '../helper/localStorage'
 import {useGetCreatorTask} from '../hooks/useGetCreatorTask'
 
 export const Card = ({card}: {card: Task}) => {
-  const user = getUserInfoFromToken()
+  const user = useStore(store => store.user)
 
   const updateSaveMutate = useUpdateSaveTask()
   const deleteMutate = useDeleteTask()

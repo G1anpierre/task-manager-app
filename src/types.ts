@@ -1,4 +1,5 @@
 import {z} from 'zod'
+import {UserType} from './helper/localStorage'
 
 export const StateList = z.enum(['PLANNED', 'DOING', 'COMPLETED'])
 export type State = z.infer<typeof StateList>
@@ -21,6 +22,7 @@ const createTask = taskSchema.pick({
   title: true,
   description: true,
   status: true,
+  userId: true,
 })
 
 const deleteTask = taskSchema.pick({
@@ -45,5 +47,7 @@ export type Store = {
   addCard: (title: string, description: string, state: State) => void
   draggedTask: Task
   setDraggedTask: (card: Task) => void
+  user: UserType
+  setUser: (user: UserType) => void
   moveTask: (title: string, state: State) => void
 }

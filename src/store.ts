@@ -1,6 +1,7 @@
 import {create} from 'zustand'
 import {State, Store, Task, taskSchema} from './types'
 import {v4 as uuid} from 'uuid'
+import {UserType} from './helper/localStorage'
 
 export const useStore = create<Store>(set => ({
   cards: [
@@ -48,6 +49,12 @@ export const useStore = create<Store>(set => ({
     userId: '',
   }),
   setDraggedTask: (card: Task) => set({draggedTask: card}),
+  user: {
+    id: '',
+    email: '',
+    iat: 0,
+  },
+  setUser: (user: UserType) => set({user: user}),
   moveTask: (id: string, state: State) =>
     set(store => {
       const card = store.cards.find(card => card.id === id) ?? store.cards[0]
