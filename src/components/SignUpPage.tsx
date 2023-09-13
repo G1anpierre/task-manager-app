@@ -121,7 +121,7 @@ export const SignUpPage = () => {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <input
+                  {/* <input
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
@@ -132,7 +132,7 @@ export const SignUpPage = () => {
                     className="ml-3 block text-sm leading-6 text-mantis-900"
                   >
                     Remember me
-                  </label>
+                  </label> */}
                 </div>
 
                 <div className="text-sm leading-6">

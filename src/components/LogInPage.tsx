@@ -9,6 +9,7 @@ import {LoadingSpiner} from '../Icons/LoadingSpiner'
 const LogInSchema = z.object({
   email: z.string().email('Please enter a valid email'),
   password: z.string().min(6),
+  rememberMe: z.boolean(),
 })
 
 export const LogInPage = () => {
@@ -17,6 +18,7 @@ export const LogInPage = () => {
     initialValues: {
       email: '',
       password: '',
+      rememberMe: false,
     },
     validationSchema: toFormikValidationSchema(LogInSchema),
     onSubmit: values => {
@@ -94,13 +96,15 @@ export const LogInPage = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
-                    id="remember-me"
-                    name="remember-me"
+                    id="rememberMe"
+                    name="rememberMe"
                     type="checkbox"
                     className="h-4 w-4 rounded border-mantis-300 text-indigo-600 focus:ring-mantis-600"
+                    onChange={formik.handleChange}
+                    checked={formik.values.rememberMe}
                   />
                   <label
-                    htmlFor="remember-me"
+                    htmlFor="rememberMe"
                     className="ml-3 block text-sm leading-6 text-mantis-900"
                   >
                     Remember me
