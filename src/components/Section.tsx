@@ -7,6 +7,7 @@ import {useNewTask} from '../provider/NewTaskProvider'
 import classNames from 'classnames'
 import useTaskList from '../hooks/useGetTasks'
 import {useMoveTask} from '../hooks/useMoveTask'
+import {PlaceHolderCards} from './PlaceHolderCards'
 
 export const Section = ({state}: {state: State}) => {
   const [drop, setDrop] = useState(false)
@@ -45,7 +46,7 @@ export const Section = ({state}: {state: State}) => {
         }}
       >
         {isLoading ? (
-          <div>Loading...</div>
+          <PlaceHolderCards />
         ) : (
           data?.map(card => <Card key={card.id} card={card} />)
         )}
